@@ -1,37 +1,36 @@
-import Negocio from "../models/Nota.js"
+import Lector from "../models/Lector.js"
 
-//TO-DO:
-export const CreateNegocio = async (req, res) => { 
+export const CrearLector = async (req, res) => { 
 
-    const { nombre, direccion, storeLocation } = req.body;
-    if(!nombre || !direccion || !storeLocation){
-        return res.status(400).json({error: "Faltan datos para crear el Negocio"})
+    const { esPremium, notasGuardadas, comentarios } = req.body;
+    if(!esPremium || !notasGuardadas || !comentarios){
+        return res.status(400).json({error: "Faltan datos para crear el lector"})
     }
     
-    const negocio = {
-        nombre, 
-        direccion, 
-        storeLocation}
+    const lector = {
+        esPremium, 
+        notasGuardadas, 
+        comentarios}
 
     try {
-        const nuevoNegocio = await Negocio.create(negocio)
-        res.status(201).json(nuevoNegocio)
+        const nuevoLector = await Lector.create(lector)
+        res.status(201).json(nuevoLector)
     } catch (error) {
-        res.status(500).json({error: "Error al crear el nuevo negocio"})
+        res.status(500).json({error: "Error al crear el nuevo lector"})
     }
     
 }
 
 
-export const getNegocios = async (req, res) => {
+export const getLectores = async (req, res) => {
     const {storeLocation} = req.query;
 
     try {
-        const negocios = await Negocio.find({
+        const lectores = await Lector.find({
             storeLocation: {$regex: storeLocation, $options: 'B'}
         })
-        res.json(negocios)
+        res.json(lectores)
     } catch (error) {
-        res.status(500).json({error: "Error al obtener negocios"})
+        res.status(500).json({error: "Error al obtener el lector"})
     }
 }

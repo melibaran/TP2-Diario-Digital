@@ -1,6 +1,5 @@
 import Comentario from "../models/Comentario.js"
 
-//TO-DO:
 export const CrearComentario = async (req, res) => { 
 
     const { idUsuario, idNota, fecha, texto } = req.body;

@@ -1,6 +1,5 @@
 import express from 'express';
 import {
-    home,
     getNotas,
     getNotasById,
     CrearNota,
@@ -9,7 +8,6 @@ import {
 const router = express.Router()
 
 
-router.get('/', home)
 router.get('/api/notas', getNotas)
 router.get('/api/notas/:id', getNotasById)
 router.post('/api/notas', CrearNota)

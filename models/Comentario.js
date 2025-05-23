@@ -5,8 +5,8 @@ const comentarioSchema = mongoose.Schema({
    idNota: { type: String, required: true}, //
     fecha: { type: Date, required: true},
     texto: { type: String, required: true},
-    likes: { type: int, required: false},
-    dislikes: { type: int, requried: false},
+    likes: { type: Number, required: false},
+    dislikes: { type: Number, requried: false},
     denuncias: { type: String, required: false},
    replies: { type: Comentario, required: false}, //
 
