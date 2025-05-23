@@ -1,8 +1,5 @@
 import Nota from "../models/Nota.js"
 
-export const home = (req, res) => {
-    res.send(`<h1>Home del Diaroi Digital</h1>`)
-}
 
 export const getNotas = async (req, res) => {
     try {
@@ -30,20 +27,21 @@ export const getNotasById = async (req, res) => {
 
 export const CrearNota = async (req, res) => {  
 
-    const { fecha, idAutor, titulo, categoria, resumen, imagenes , texto} = req.body;
-    if(!fecha || !idAutor || !titulo || !categoria 
-        || !resumen || !imagenes || !texto){
+    const { fecha, idPeriodista, titulo, categoria, resumen, imagenes , texto, comentarios} = req.body;
+    if(!fecha || !idPeriodista || !titulo || !categoria 
+        || !resumen || !imagenes || !texto || !comentarios){
         return res.status(400).json({error: "Faltan datos"})
     }
 
     const nota = {
         fecha,
-        idAutor,
+        idPeriodista,
         titulo,
         categoria,
         resumen,
         imagenes,
-        texto
+        texto, 
+        comentarios,
     }
 
     try {

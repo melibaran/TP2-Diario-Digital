@@ -1,5 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv'
+import comentariosRouter from './routes/comentariosRoutes.js'
+import notasRouter from './routes/notasRoutes.js'
+import lectoresRouter from './routes/lectoresRoutes.js'
+
 
 
 import conectarDB from './config/db.js';
@@ -19,6 +23,8 @@ app.use(express.json())
 
 app.use("/", comentariosRouter)
 app.use("/", notasRouter)
+app.use("/", lectoresRouter)
+
 
 
 
