@@ -7,6 +7,7 @@ const usuarioSchema = mongoose.Schema({
     password: { type: String, required: true},
     fechaAlta: { type: Date, required: true},
     estaActivo: { type: Boolean, required: true},
+    esAdmin: {type: Boolean, required: true}
 
 }, { timestamps: true})
 
