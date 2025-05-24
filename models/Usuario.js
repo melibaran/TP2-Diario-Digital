@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import Nota from "./Nota";
 
 const usuarioSchema = mongoose.Schema({
     username: { type: String, required: true},
@@ -11,4 +10,4 @@ const usuarioSchema = mongoose.Schema({
 
 }, { timestamps: true})
 
-export default mongoose.model("Empleado", usuarioSchema)
+export default mongoose.model("Usuario", usuarioSchema)
