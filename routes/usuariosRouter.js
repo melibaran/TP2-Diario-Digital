@@ -8,9 +8,9 @@ import {
 const router = express.Router()
 
 
-router.get('/api/comentarios', getUsuarios)
-router.post('/api/comentarios', CrearUsuario)
-router.get('/api/comentarios/:id', getUsuariosById)
+router.get('/api/usuarios', getUsuarios)
+router.post('/api/usuarios', CrearUsuario)
+router.get('/api/usuarios/:id', getUsuariosById)
 
 
 
