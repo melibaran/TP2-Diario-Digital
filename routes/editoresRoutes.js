@@ -3,7 +3,7 @@ import {
     CrearEditor,
     getEditores,
     getEditoresById
-} from '../controllers/editoresController';
+} from '../controllers/editoresController.js';
 
 const router = express.Router();
 

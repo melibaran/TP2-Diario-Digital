@@ -4,7 +4,7 @@ import {
     getPeriodistas,
     getPeriodistaById,
     getNotasByPeriodista
-} from '../controllers/periodistasController';
+} from '../controllers/periodistasController.js';
 
 const router = express.Router();
 

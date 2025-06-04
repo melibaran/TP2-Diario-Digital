@@ -3,8 +3,8 @@ import dotenv from 'dotenv'
 import comentariosRouter from './routes/comentariosRoutes.js'
 import notasRouter from './routes/notasRoutes.js'
 import lectoresRouter from './routes/lectoresRoutes.js'
-import periodistasRouter from './routes/periodistasRouter.js'
-import editoresRouter from './routes/editoresRouter.js'
+import periodistasRoutes from './routes/periodistasRoutes.js'
+import editoresRoutes from './routes/editoresRoutes.js'
 import usuariosRouter from './routes/usuariosRouter.js'
 
 import conectarDB from './config/db.js';
@@ -25,8 +25,8 @@ app.use(express.json())
 app.use("/", comentariosRouter)
 app.use("/", notasRouter)
 app.use("/", lectoresRouter)
-app.use("/", periodistasRouter)
-app.use("/", editoresRouter)
+app.use("/", periodistasRoutes)
+app.use("/", editoresRoutes)
 app.use("/", usuariosRouter)
 
 
