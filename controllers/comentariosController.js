@@ -39,3 +39,18 @@ export const getComentarios = async (req, res) => {
         res.status(500).json({error: "Error al obtener comentarios"})
     }
 }
+
+export const getComentariosById = async (req, res) => {
+
+    try {
+        const comentario = await Comentario.findById(req.params.id)
+        if(comentario){
+            res.json(comentario)
+        }else{
+            res.status(404).json({ error: 'Comentario no encontrado'})
+        }
+    } catch (error) {
+        res.status(500).json({ error: "ID de comentario invalido"})
+    }
+
+}

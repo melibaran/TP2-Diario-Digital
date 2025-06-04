@@ -34,3 +34,18 @@ export const getLectores = async (req, res) => {
         res.status(500).json({error: "Error al obtener el lector"})
     }
 }
+
+export const getLectoresById = async (req, res) => {
+
+    try {
+        const lector = await Lector.findById(req.params.id)
+        if(lector){
+            res.json(lector)
+        }else{
+            res.status(404).json({ error: 'Lector no encontrado'})
+        }
+    } catch (error) {
+        res.status(500).json({ error: "ID de lector invalido"})
+    }
+
+}
