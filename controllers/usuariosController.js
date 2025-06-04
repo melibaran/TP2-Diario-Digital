@@ -40,4 +40,19 @@ export const getUsuarios = async (req, res) => {
 }
 
 
+export const getUsuariosById = async (req, res) => {
+
+    try {
+        const usuario = await Usuario.findById(req.params.id)
+        if(usuario){
+            res.json(usuario)
+        }else{
+            res.status(404).json({ error: 'Usuario no encontrado'})
+        }
+    } catch (error) {
+        res.status(500).json({ error: "ID de usuario invalido"})
+    }
+
+}
+
 
