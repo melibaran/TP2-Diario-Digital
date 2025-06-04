@@ -1,5 +1,5 @@
-import Periodista from '../models/Periodista'
-import Nota from '../models/Nota'
+import Periodista from '../models/Periodista.js'
+import Nota from '../models/Nota.js'
 
 export const CrearPeriodista = async (req, res) => {
     const { idUsuario, categorias } = req.body;

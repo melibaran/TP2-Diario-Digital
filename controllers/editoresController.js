@@ -1,4 +1,4 @@
-import Editor from '../models/Editor'
+import Editor from '../models/Editor.js'
 
 export const CrearEditor = async (req, res) => {
     const { idUsuario, notas } = req.body;
