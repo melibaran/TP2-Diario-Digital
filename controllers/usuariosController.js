@@ -2,8 +2,8 @@ import Usuario from "../models/Usuario.js"
 
 export const CrearUsuario = async (req, res) => { 
 
-    const { username, email, nombreYApellido, password, fechaAlta, estaActivo} = req.body;
-    if(!username || !email || !nombreYApellido || !password || !fechaAlta || !estaActivo){
+    const { username, email, nombreYApellido, password, fechaAlta, esAdmin, estaActivo} = req.body;
+    if(!username || !email || !nombreYApellido || !password || !fechaAlta || !esAdmin || !estaActivo){
         return res.status(400).json({error: "Faltan datos para crear el usuario"})
     }
     
@@ -12,7 +12,8 @@ export const CrearUsuario = async (req, res) => {
         email, 
         nombreYApellido, 
         password, 
-        fechaAlta, 
+        fechaAlta,
+        esAdmin, 
         estaActivo, 
         }
 
@@ -20,7 +21,7 @@ export const CrearUsuario = async (req, res) => {
         const nuevoUsuario = await Usuario.create(usuario)
         res.status(201).json(nuevoUsuario)
     } catch (error) {
-        res.status(500).json({error: "Error al crear el nuevo usuario"})
+        res.status(500).json({error: "Error al crear el nuevo usuario. Detalles del error: " + error})
     }
     
 }
@@ -35,10 +36,9 @@ export const getUsuarios = async (req, res) => {
         })
         res.json(usuario)
     } catch (error) {
-        res.status(500).json({error: "Error al obtener usuarios"})
+        res.status(500).json({error: "Error al obtener usuarios. Detalle del error: " + error})
     }
 }
-
 
 export const getUsuariosById = async (req, res) => {
 
@@ -50,7 +50,7 @@ export const getUsuariosById = async (req, res) => {
             res.status(404).json({ error: 'Usuario no encontrado'})
         }
     } catch (error) {
-        res.status(500).json({ error: "ID de usuario invalido"})
+        res.status(500).json({ error: "ID de usuario invalido. Detalles del error: " + error})
     }
 
 }

@@ -1,14 +1,14 @@
 import Editor from '../models/Editor.js'
 
 export const CrearEditor = async (req, res) => {
-    const { idUsuario, notas } = req.body;
+    const {idUsuario} = req.body;
 
-    if (!idUsuario || !Array.isArray(notas)) {
+    if (!idUsuario) {
         return res.status(400).json({ error: "Faltan datos o 'notas' no es un array" });
     }
 
     try {
-        const nuevoEditor = await Editor.create({ idUsuario, notas });
+        const nuevoEditor = await Editor.create({ idUsuario, notas: [] });
         res.status(201).json(nuevoEditor);
     } catch (error) {
         res.status(500).json({ error: "Error al crear un nuevo editor" });
