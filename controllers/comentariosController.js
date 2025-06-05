@@ -12,16 +12,15 @@ export const CrearComentario = async (req, res) => {
         idNota, 
         fecha, 
         texto, 
-        likes, 
-        dislikes, 
-        denuncias, 
-        replies}
+        likes : 0, 
+        dislikes: 0, 
+        denuncias: 0}
 
     try {
         const nuevoComentario = await Comentario.create(comentario)
         res.status(201).json(nuevoComentario)
     } catch (error) {
-        res.status(500).json({error: "Error al crear el nuevo comentario"})
+        res.status(500).json({error: "Error al crear el nuevo comentario. Error: " + error})
     }
     
 }
@@ -36,7 +35,7 @@ export const getComentarios = async (req, res) => {
         })
         res.json(comentario)
     } catch (error) {
-        res.status(500).json({error: "Error al obtener comentarios"})
+        res.status(500).json({error: "Error al obtener comentarios. Detalles del error: " + error})
     }
 }
 
@@ -50,7 +49,7 @@ export const getComentariosById = async (req, res) => {
             res.status(404).json({ error: 'Comentario no encontrado'})
         }
     } catch (error) {
-        res.status(500).json({ error: "ID de comentario invalido"})
+        res.status(500).json({ error: "ID de comentario invalido. Detalles de error: " + error})
     }
 
 }
