@@ -10,7 +10,7 @@ const router = express.Router()
 
 router.get('/api/lectores', getLectores)
 router.post('/api/lectores', CrearLector)
-router.get('/api/notas/:id', getLectoresById)
+router.get('/api/lectores/:id', getLectoresById)
 
 
 

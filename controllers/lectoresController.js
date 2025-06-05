@@ -2,21 +2,22 @@ import Lector from "../models/Lector.js"
 
 export const CrearLector = async (req, res) => { 
 
-    const { esPremium, notasGuardadas, comentarios } = req.body;
-    if(!esPremium || !notasGuardadas || !comentarios){
+    const { idUsuario, esPremium } = req.body;
+    if(!idUsuario || !esPremium){
         return res.status(400).json({error: "Faltan datos para crear el lector"})
     }
     
     const lector = {
+        idUsuario,
         esPremium, 
-        notasGuardadas, 
-        comentarios}
+        notasGuardadas: [], 
+        comentarios: [],}
 
     try {
         const nuevoLector = await Lector.create(lector)
         res.status(201).json(nuevoLector)
     } catch (error) {
-        res.status(500).json({error: "Error al crear el nuevo lector"})
+        res.status(500).json({error: "Error al crear el nuevo lector. Detalles del error: " + error})
     }
     
 }
@@ -31,7 +32,7 @@ export const getLectores = async (req, res) => {
         })
         res.json(lectores)
     } catch (error) {
-        res.status(500).json({error: "Error al obtener el lector"})
+        res.status(500).json({error: "Error al obtener el lector. Detalles del error: " + error})
     }
 }
 
