@@ -62,7 +62,7 @@ export const getNotasByPeriodista = async (req, res) => {
 };
 
 export const editarDatos = async (req, res) => {
-  const { categorias } = req.body; // 👈 te faltaba esto
+  const { categorias } = req.body; 
 
   try {
     const periodista = await Periodista.findById(req.params.id).populate("idUsuario");
