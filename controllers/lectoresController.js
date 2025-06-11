@@ -56,27 +56,18 @@ export const editarDatos = async (req, res) => {
   try {
     const lector = await Lector.findById(req.params.id);
 
-    if (lector) {
-      res.json(lector);
-    } else {
-      res.status(404).json({ error: "Lector no encontrado" });
+    if (!lector) {
+      return res.status(404).json({ error: "Lector no encontrado" });
     }
 
-    if (esPremium !== undefined) {
-      lector.esPremium = esPremium;
-    }
-
-    if (notasGuardadas === undefined) {
-      lector.notasGuardadas = notasGuardadas;
-    }
-
-    if (comentarios === undefined) {
-      lector.comentarios = comentarios;
-    }
+    if (esPremium !== undefined) lector.esPremium = esPremium;
+    if (notasGuardadas !== undefined) lector.notasGuardadas = notasGuardadas;
+    if (comentarios !== undefined) lector.comentarios = comentarios;
 
     const lectorActualizado = await lector.save();
     res.json(lectorActualizado);
   } catch (error) {
-    res.status(500).json({ error: "Error al editar el lector" });
+    res.status(500).json({ error: "Error al editar el lector. Detalles: " + error });
   }
 };
+

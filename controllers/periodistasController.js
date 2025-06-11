@@ -62,15 +62,13 @@ export const getNotasByPeriodista = async (req, res) => {
 };
 
 export const editarDatos = async (req, res) => {
-  try {
-    const periodista = await Periodista.findById(req.params.id).populate(
-      "idUsuario"
-    );
+  const { categorias } = req.body; // 👈 te faltaba esto
 
-    if (periodista) {
-      res.json(periodista);
-    } else {
-      res.status(404).json({ error: "Periodista no encontrado" });
+  try {
+    const periodista = await Periodista.findById(req.params.id).populate("idUsuario");
+
+    if (!periodista) {
+      return res.status(404).json({ error: "Periodista no encontrado" });
     }
 
     if (categorias !== undefined) {
@@ -83,3 +81,4 @@ export const editarDatos = async (req, res) => {
     res.status(500).json({ error: "Error al editar el periodista" });
   }
 };
+

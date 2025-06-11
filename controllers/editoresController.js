@@ -61,11 +61,12 @@ export const editarDatos = async (req, res) => {
     }
 
     const editorActualizado = await editor.save();
-    res.json(editorActualizado);
+    res.json(editorActualizado);  
   } catch (error) {
     res.status(500).json({ error: "Error al editar el editor" });
   }
 };
+
 
 export const getComentariosDeEditores = async (req, res) => {
   try {
