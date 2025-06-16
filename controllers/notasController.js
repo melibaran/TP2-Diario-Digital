@@ -3,9 +3,9 @@ import Nota from "../models/Nota.js"
 
 export const CrearNota = async (req, res) => {  
 
-    const { fecha, idPeriodista, titulo, categoria, resumen, imagenes , texto} = req.body;
+    const { fecha, idPeriodista, titulo, categoria, resumen, texto} = req.body;
     if(!fecha || !idPeriodista || !titulo || !categoria 
-        || !resumen || !imagenes || !texto){
+        || !resumen || !texto){
         return res.status(400).json({error: "Faltan datos"})
     }
 
@@ -15,7 +15,6 @@ export const CrearNota = async (req, res) => {
         titulo,
         categoria,
         resumen,
-        imagenes,
         texto
     }
 
