@@ -56,3 +56,53 @@ export const getUsuariosById = async (req, res) => {
 }
 
 
+
+//TO-DO
+// Actualizar imagen de perfil en Supabase
+export const actualizarProfilePic = async (req, res) => {
+    const { usuario } = req;
+    const file = req.file;
+
+    if (!file) {
+        return res.status(400).json({ error: 'No se proporcionó ninguna imagen' });
+    }
+
+    const fileName = `${Date.now()}_${file.originalname}`;
+    const filePath = `usuarios/${usuario.id}/profilePic/${fileName}`;
+
+    try {
+        const { error: uploadError } = await supabase.storage
+            .from(process.env.SUPABASE_BUCKET)
+            .upload(filePath, file.buffer, {
+                contentType: file.mimetype,
+                upsert: true
+            });
+
+        if (uploadError) {
+            return res.status(500).json({ error: 'Error al subir la imagen a Supabase' });
+        }
+
+        const { data: publicUrlData } = supabase.storage
+            .from(process.env.SUPABASE_BUCKET)
+            .getPublicUrl(filePath);
+
+        const profilePicUrl = publicUrlData.publicUrl;
+
+        const alumnoActualizado = await Alumno.findByIdAndUpdate(
+            usuario.id,
+            { profile_pic: profilePicUrl },
+            { new: true }
+        );
+
+        res.json({
+            msg: 'Imagen actualizada correctamente',
+            alumno: alumnoActualizado
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al actualizar la imagen' });
+    }
+};
+
+
+

@@ -6,6 +6,7 @@ import lectoresRouter from './routes/lectoresRoutes.js'
 import periodistasRoutes from './routes/periodistasRoutes.js'
 import editoresRoutes from './routes/editoresRoutes.js'
 import usuariosRouter from './routes/usuariosRouter.js'
+import logInRouter from './routes/logInRoutes.js'
 
 import conectarDB from './config/db.js';
 
@@ -28,6 +29,7 @@ app.use("/", lectoresRouter)
 app.use("/", periodistasRoutes)
 app.use("/", editoresRoutes)
 app.use("/", usuariosRouter)
+app.use("/", logInRouter)
 
 
 
