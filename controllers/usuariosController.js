@@ -1,4 +1,5 @@
 import Usuario from "../models/Usuario.js"
+import bcrypt from "bcryptjs";
 
 export const CrearUsuario = async (req, res) => { 
 
@@ -7,17 +8,19 @@ export const CrearUsuario = async (req, res) => {
         return res.status(400).json({error: "Faltan datos para crear el usuario"})
     }
     
-    const usuario = {
-        username, 
-        email, 
-        nombreYApellido, 
-        password, 
-        fechaAlta,
-        esAdmin, 
-        estaActivo, 
-        }
-
     try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const usuario = {
+            username, 
+            email, 
+            nombreYApellido, 
+            password: hashedPassword, 
+            fechaAlta,
+            esAdmin, 
+            estaActivo, 
+            }
+
         const nuevoUsuario = await Usuario.create(usuario)
         res.status(201).json(nuevoUsuario)
     } catch (error) {
@@ -25,7 +28,6 @@ export const CrearUsuario = async (req, res) => {
     }
     
 }
-
 
 export const getUsuarios = async (req, res) => {
     const {storeLocation} = req.query;
@@ -40,8 +42,20 @@ export const getUsuarios = async (req, res) => {
     }
 }
 
-export const getUsuariosById = async (req, res) => {
 
+export const getUsuariosSearch = async (req, res) => {
+    const { nombre } = req.query;
+    try {
+        const usuarios = await Usuario.find({
+            nombre: { $regex: nombre, $options: 'i' }
+        });
+        res.json(usuarios);
+    } catch (error) {
+        res.status(500).json({ error: "Error al obtener usuarios" });
+    }
+}
+
+export const getUsuariosById = async (req, res) => {
     try {
         const usuario = await Usuario.findById(req.params.id)
         if(usuario){
@@ -88,7 +102,7 @@ export const actualizarProfilePic = async (req, res) => {
 
         const profilePicUrl = publicUrlData.publicUrl;
 
-        const alumnoActualizado = await Alumno.findByIdAndUpdate(
+        const usuarioActualizado = await Usuario.findByIdAndUpdate(
             usuario.id,
             { profile_pic: profilePicUrl },
             { new: true }
@@ -96,13 +110,10 @@ export const actualizarProfilePic = async (req, res) => {
 
         res.json({
             msg: 'Imagen actualizada correctamente',
-            alumno: alumnoActualizado
+            usuario: usuarioActualizado
         });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error al actualizar la imagen' });
     }
-};
-
-
-
+}
