@@ -33,9 +33,7 @@ export const getUsuarios = async (req, res) => {
     const {storeLocation} = req.query;
 
     try {
-        const usuario = await Usuario.find({
-            storeLocation: {$regex: storeLocation, $options: 'B'}
-        })
+        const usuario = await Usuario.find()
         res.json(usuario)
     } catch (error) {
         res.status(500).json({error: "Error al obtener usuarios. Detalle del error: " + error})

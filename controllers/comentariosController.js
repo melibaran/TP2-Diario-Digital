@@ -30,9 +30,7 @@ export const getComentarios = async (req, res) => {
     const {storeLocation} = req.query;
 
     try {
-        const comentario = await Comentario.find({
-            storeLocation: {$regex: storeLocation, $options: 'B'}
-        })
+        const comentario = await Comentario.find()
         res.json(comentario)
     } catch (error) {
         res.status(500).json({error: "Error al obtener comentarios. Detalles del error: " + error})
