@@ -3,14 +3,25 @@ import {
     getNotas,
     getNotasById,
     CrearNota,
-} from '../controllers/notasController.js'
+    filtrarNotas,
+} from '../controllers/notasController.js';
+import { protegerRuta } from '../middlewares/authMiddlewares.js';
+import { allowMultupleUpload } from '../middlewares/uploadMiddleware.js';
 
 const router = express.Router()
 
+// Crear notas (con imágenes, protegido)
+router.post('/api/notas', protegerRuta, allowMultupleUpload, CrearNota);
 
-router.get('/api/notas', getNotas)
+// Obtener todos las notas
+router.get('/api/notas', getNotas);
+
+// Obtener una nota por ID
 router.get('/api/notas/:id', getNotasById)
-router.post('/api/notas', CrearNota)
+
+// Filtrar notas (por keyword, userId, fechas)
+router.get('/api/posts/search', filtrarNotas);
+
 
 
 export default router

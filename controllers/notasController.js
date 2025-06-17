@@ -1,31 +1,62 @@
 import Nota from "../models/Nota.js"
+import Periodista from "../models/Periodista.js";
+import supabase from '../config/supabase.js';
 
 
-export const CrearNota = async (req, res) => {  
-
+export const crearNota = async (req, res) => {
+    const { periodista } = req;
     const { fecha, idPeriodista, titulo, categoria, resumen, texto} = req.body;
+    const file = req.file;
+
     if(!fecha || !idPeriodista || !titulo || !categoria 
-        || !resumen || !texto){
-        return res.status(400).json({error: "Faltan datos"})
+    || !resumen || !texto){        
+        return res.status(400).json({ error: "Faltan datos" });
     }
 
-    const nota = {
-        fecha,
-        idPeriodista,
-        titulo,
-        categoria,
-        resumen,
-        texto
+    let imageUrl = "";
+
+    if (file) {
+        const fileName = `${Date.now()}_${file.originalname}`;
+        const filePath = `nota/${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+            .from(process.env.SUPABASE_BUCKET)
+            .upload(filePath, file.buffer, {
+                contentType: file.mimetype,
+                upsert: true
+            });
+
+        if (uploadError) {
+            return res.status(500).json({ error: "Error al subir la imagen" });
+        }
+
+        const { data: publicUrlData, error: urlError } = supabase.storage
+            .from(process.env.SUPABASE_BUCKET)
+            .getPublicUrl(filePath);
+
+        if (urlError || !publicUrlData?.publicUrl) {
+            return res.status(500).json({ error: "Error al obtener la URL pública" });
+        }
+
+        imageUrl = publicUrlData.publicUrl;
     }
 
     try {
-        const nuevaNota = await Nota.create(nota)
-        res.status(201).json(nuevaNota)
+        const nuevaNota = await Nota.create({
+            fecha,
+            idPeriodista: Periodista.id,
+            titulo,
+            categoria,
+            resumen,
+            texto,
+            imagen: imageUrl,
+
+        });
+        res.status(201).json(nuevaNota);
     } catch (error) {
-        res.status(500).json({error: "Error al crear la nota. Detalles del error: " + error})
+        res.status(500).json({ error: "Error al crear la nota", errorMsg: error.message });
     }
-    
-}
+};
 
 export const getNotas = async (req, res) => {
     try {
@@ -50,6 +81,7 @@ export const getNotasById = async (req, res) => {
     }
 
 }
+
 
 
 export const filtrarNotas = async (req, res) => {

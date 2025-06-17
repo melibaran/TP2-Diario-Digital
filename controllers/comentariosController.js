@@ -1,28 +1,37 @@
 import Comentario from "../models/Comentario.js"
+import Nota from "../models/Nota.js"
 
 export const CrearComentario = async (req, res) => { 
 
     const { idUsuario, idNota, fecha, texto } = req.body;
+    //VER: const { id: idNota } = req.params;
+    const { usuario } = req;
+
+
     if(!idUsuario || !idNota || !fecha || !texto){
         return res.status(400).json({error: "Faltan datos para crear el comentario"})
     }
-    
-    const comentario = {
-        idUsuario, 
-        idNota, 
+
+    try {
+    const nota = await Nota.findById(postId);
+    if (!nota) {
+        return res.status(404).json({ error: "Nota no encontrada" });
+    }
+
+    const comentario = ({
+        userId: usuario.id,
+        nota: idNota, 
         fecha, 
         texto, 
         likes : 0, 
         dislikes: 0, 
-        denuncias: 0}
+        denuncias: 0
+    });
 
-    try {
-        const nuevoComentario = await Comentario.create(comentario)
-        res.status(201).json(nuevoComentario)
+    res.status(201).json(comentario)
     } catch (error) {
         res.status(500).json({error: "Error al crear el nuevo comentario. Error: " + error})
     }
-    
 }
 
 
@@ -51,3 +60,19 @@ export const getComentariosById = async (req, res) => {
     }
 
 }
+
+
+// Listar comentarios de una nota
+export const listarComentarios = async (req, res) => {
+    const { id: notaId } = req.params;
+
+    try {
+        const comentarios = await Comentario.find({ nota: notaId })
+            .populate('userId', 'nombre email') 
+            .sort({ createdAt: -1 });
+
+        res.json(comentarios);
+    } catch (error) {
+        res.status(500).json({ error: "Error al obtener comentarios", errorMsg: error.message });
+    }
+};

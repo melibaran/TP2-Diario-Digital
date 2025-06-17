@@ -5,17 +5,21 @@ import {
     getUsuariosById,
     actualizarProfilePic,
     getUsuariosSearch,
-} from '../controllers/usuariosController.js'
+    login
+} from '../controllers/usuariosController.js';
+import { protegerRuta } from '../middlewares/authMiddlewares.js';
+import { allowUpload } from '../middlewares/uploadMiddleware.js';
 
 const router = express.Router()
 
+//VER ESTO: router.post('/api/login', login);
 
 router.get('/api/usuarios', getUsuarios)
-router.post('/api/usuarios', CrearUsuario)
+router.post('/api/usuarios', protegerRuta, CrearUsuario);
 router.get('/api/usuarios/:id', getUsuariosById)
-router.get('/api/usuarios/pla', getUsuariosSearch)
 router.put('/api/usuarios/actualizar', actualizarProfilePic)
+router.get('/api/search/usuarios', getUsuariosSearch);
 
-
+router.put('/api/usuarios', protegerRuta, allowUpload, actualizarProfilePic);
 
 export default router

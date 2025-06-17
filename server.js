@@ -1,5 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv'
+import cookieParser from 'cookie-parser';
+
 import comentariosRouter from './routes/comentariosRoutes.js'
 import notasRouter from './routes/notasRoutes.js'
 import lectoresRouter from './routes/lectoresRoutes.js'
@@ -20,8 +22,10 @@ conectarDB()
 
 console.log("EL PUERTO ES: ", PORT);
 
+// Middlewares globales
+app.use(express.json());
+app.use(cookieParser());
 
-app.use(express.json()) 
 
 app.use("/", comentariosRouter)
 app.use("/", notasRouter)
@@ -31,7 +35,10 @@ app.use("/", editoresRoutes)
 app.use("/", usuariosRouter)
 app.use("/", logInRouter)
 
-
+// Middleware 404
+app.use((req, res) => {
+    res.status(404).json({ error: 'Ruta no encontrada' });
+});
 
 
 app.listen(PORT, () => {

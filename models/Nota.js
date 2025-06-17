@@ -6,7 +6,7 @@ const notaSchema = mongoose.Schema({
     titulo: { type: String, required: true},
     categoria: { type: String, required: true},
     resumen: { type: String, required: true},
-    imagenes: { type: String, required: false}, //
+    imagenes: { type: String, required: true}, //
     texto: { type: String, required: true},
     comentarios: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comentario" }]
 
