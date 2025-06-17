@@ -7,8 +7,8 @@ export const protegerRuta = (req, res, next) => {
         return res.status(401).json({ error: "Token no proporcionado" });
     }
 
-    const token = authHeader.split(" ")[1];
-
+    const token = authHeader.split(' ')[1];
+    
     try {
         const decodificado = jwt.verify(token, process.env.JWT_SECRET);
         req.usuario = decodificado;
@@ -19,6 +19,6 @@ export const protegerRuta = (req, res, next) => {
 
         next();
     } catch (error) {
-        return res.status(403).json({ error: 'Token inválido o expirado' });
+        return res.status(403).json({ error: 'Token inválido o expirado'}, error);
     }
 };
