@@ -1,5 +1,6 @@
 import Nota from "../models/Nota.js"
 import Periodista from "../models/Periodista.js";
+import Comentario from "../models/Comentario.js";
 import supabase from '../config/supabase.js';
 
 

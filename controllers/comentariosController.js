@@ -3,12 +3,12 @@ import Nota from "../models/Nota.js"
 
 export const CrearComentario = async (req, res) => { 
 
-    const { idUsuario, idNota, fecha, texto } = req.body;
-    //VER: const { id: idNota } = req.params;
+    const { fecha, texto } = req.body;
+    const { id: idNota } = req.params;
     const { usuario } = req;
 
 
-    if(!idUsuario || !idNota || !fecha || !texto){
+    if(!fecha || !texto){
         return res.status(400).json({error: "Faltan datos para crear el comentario"})
     }
 

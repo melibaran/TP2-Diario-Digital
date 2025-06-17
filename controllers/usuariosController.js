@@ -40,7 +40,7 @@ export const getUsuarios = async (req, res) => {
     }
 }
 
-
+// Buscar usuarios por nombre (case insensitive)
 export const getUsuariosSearch = async (req, res) => {
     const { nombre } = req.query;
     try {

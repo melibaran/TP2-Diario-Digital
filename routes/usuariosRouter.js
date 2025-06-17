@@ -5,14 +5,14 @@ import {
     getUsuariosById,
     actualizarProfilePic,
     getUsuariosSearch,
-    login
+//    login
 } from '../controllers/usuariosController.js';
 import { protegerRuta } from '../middlewares/authMiddlewares.js';
 import { allowUpload } from '../middlewares/uploadMiddleware.js';
 
 const router = express.Router()
 
-//VER ESTO: router.post('/api/login', login);
+//router.post('/api/login', login);
 
 router.get('/api/usuarios', getUsuarios)
 router.post('/api/usuarios', protegerRuta, CrearUsuario);
