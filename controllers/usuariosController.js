@@ -1,12 +1,14 @@
 import Usuario from "../models/Usuario.js"
 import bcrypt from "bcryptjs";
+import supabase from '../config/supabase.js';
+
 
 export const CrearUsuario = async (req, res) => { 
 
     const { username, email, nombreYApellido, password, fechaAlta, esAdmin, estaActivo} = req.body;
-    if(!username || !email || !nombreYApellido || !password || !fechaAlta || !esAdmin || !estaActivo){
-        return res.status(400).json({error: "Faltan datos para crear el usuario"})
-    }
+    if (!username || !email || !nombreYApellido || !password || !fechaAlta || esAdmin === undefined || estaActivo === undefined) {
+    return res.status(400).json({ error: "Faltan datos para crear el usuario" });
+}
     
     try {
         const hashedPassword = await bcrypt.hash(password, 10);

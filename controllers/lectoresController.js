@@ -12,6 +12,7 @@ export const CrearLector = async (req, res) => {
     notasGuardadas: [],
     comentarios: [],
   };
+
   try {
     const nuevoLector = await Lector.create(lector);
     res.status(201).json(nuevoLector);
@@ -26,13 +27,15 @@ export const getLectores = async (req, res) => {
   const { storeLocation } = req.query;
 
   try {
-    const lectores = await Lector.find({
-      storeLocation: { $regex: storeLocation, $options: "B" },
-    });
+    const filtro = storeLocation
+      ? { storeLocation: { $regex: storeLocation, $options: "i" } }
+      : {};
+
+    const lectores = await Lector.find(filtro);
     res.json(lectores);
   } catch (error) {
     res.status(500).json({
-      error: "Error al obtener el lector. Detalles del error: " + error,
+      error: "Error al obtener los lectores. Detalles del error: " + error,
     });
   }
 };
@@ -46,7 +49,7 @@ export const getLectoresById = async (req, res) => {
       res.status(404).json({ error: "Lector no encontrado" });
     }
   } catch (error) {
-    res.status(500).json({ error: "ID de lector invalido" });
+    res.status(500).json({ error: "ID de lector inválido" });
   }
 };
 
@@ -70,4 +73,3 @@ export const editarDatos = async (req, res) => {
     res.status(500).json({ error: "Error al editar el lector. Detalles: " + error });
   }
 };
-

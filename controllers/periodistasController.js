@@ -51,9 +51,8 @@ export const getNotasByPeriodista = async (req, res) => {
   try {
     const periodistaId = req.params.id;
 
-    const notas = await Nota.find({ periodista: periodistaId }).populate(
-      "periodista"
-    );
+    const notas = await Nota.find({ idPeriodista: periodistaId }).populate("idPeriodista");
+
 
     res.json(notas);
   } catch (error) {

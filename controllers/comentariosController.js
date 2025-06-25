@@ -18,7 +18,7 @@ export const CrearComentario = async (req, res) => {
         return res.status(404).json({ error: "Nota no encontrada" });
     }
 
-    const comentario = ({
+    const comentario = await Comentario.create({
         userId: usuario.id,
         nota: idNota, 
         fecha, 
