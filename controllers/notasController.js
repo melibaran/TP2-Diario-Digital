@@ -5,7 +5,6 @@ import supabase from '../config/supabase.js';
 
 
 export const crearNota = async (req, res) => {
-    const { periodista } = req;
     const { fecha, idPeriodista, titulo, categoria, resumen, texto} = req.body;
     const file = req.file;
 

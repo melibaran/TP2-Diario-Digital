@@ -24,14 +24,8 @@ export const CrearLector = async (req, res) => {
 };
 
 export const getLectores = async (req, res) => {
-  const { storeLocation } = req.query;
-
   try {
-    const filtro = storeLocation
-      ? { storeLocation: { $regex: storeLocation, $options: "i" } }
-      : {};
-
-    const lectores = await Lector.find(filtro);
+    const lectores = await Lector.find();
     res.json(lectores);
   } catch (error) {
     res.status(500).json({
