@@ -3,7 +3,6 @@ import {
     getNotas,
     getNotasById,
     crearNota,
-    filtrarNotas,
 } from '../controllers/notasController.js';
 import { protegerRuta } from '../middlewares/authMiddlewares.js';
 import { allowMultipleUpload } from '../middlewares/uploadMiddleware.js';
@@ -19,8 +18,6 @@ router.get('/api/notas', getNotas);
 // Obtener una nota por ID
 router.get('/api/notas/:id', getNotasById)
 
-// Filtrar notas (por keyword, userId, fechas)
-router.get('/api/posts/search', filtrarNotas);
 
 
 
