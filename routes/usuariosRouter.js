@@ -17,9 +17,8 @@ const router = express.Router()
 router.get('/api/usuarios', getUsuarios)
 router.post('/api/usuarios', protegerRuta, CrearUsuario);
 router.get('/api/usuarios/:id', getUsuariosById)
-router.put('/api/usuarios/actualizar', actualizarProfilePic)
 router.get('/api/search/usuarios', getUsuariosSearch);
 
-router.put('/api/usuarios', protegerRuta, allowUpload, actualizarProfilePic);
+router.patch('/api/usuarios/:id/profile-pic', allowUpload, actualizarProfilePic);
 
 export default router

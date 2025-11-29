@@ -71,20 +71,23 @@ export const getUsuariosById = async (req, res) => {
 
 
 
-//TO-DO
-// Actualizar imagen de perfil en Supabase
 export const actualizarProfilePic = async (req, res) => {
-    const { usuario } = req;
+    const { id } = req.params;
     const file = req.file;
 
     if (!file) {
         return res.status(400).json({ error: 'No se proporcionó ninguna imagen' });
     }
 
-    const fileName = `${Date.now()}_${file.originalname}`;
-    const filePath = `usuarios/${usuario.id}/profilePic/${fileName}`;
-
     try {
+        const usuario = await Usuario.findById(id);
+        if (!usuario) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+
+        const fileName = `${Date.now()}_${file.originalname}`;
+        const filePath = `usuarios/${id}/profilePic/${fileName}`;
+
         const { error: uploadError } = await supabase.storage
             .from(process.env.SUPABASE_BUCKET)
             .upload(filePath, file.buffer, {
@@ -103,7 +106,7 @@ export const actualizarProfilePic = async (req, res) => {
         const profilePicUrl = publicUrlData.publicUrl;
 
         const usuarioActualizado = await Usuario.findByIdAndUpdate(
-            usuario.id,
+            id,
             { profile_pic: profilePicUrl },
             { new: true }
         );
