@@ -5,12 +5,12 @@ import {
     crearNota,
 } from '../controllers/notasController.js';
 import { protegerRuta } from '../middlewares/authMiddlewares.js';
-import { allowMultipleUpload } from '../middlewares/uploadMiddleware.js';
+import { allowAnyFile } from '../middlewares/uploadMiddleware.js';
 
 const router = express.Router()
 
 // Crear notas (con imágenes, protegido)
-router.post('/api/notas', protegerRuta, allowMultipleUpload, crearNota);
+router.post('/api/notas', protegerRuta, allowAnyFile, crearNota);
 
 // Obtener todos las notas
 router.get('/api/notas', getNotas);

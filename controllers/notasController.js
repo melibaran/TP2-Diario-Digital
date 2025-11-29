@@ -6,7 +6,7 @@ import supabase from '../config/supabase.js';
 
 export const crearNota = async (req, res) => {
     const { fecha, idPeriodista, titulo, categoria, resumen, texto} = req.body;
-    const file = req.file;
+    const file = req.files && req.files.length > 0 ? req.files[0] : null;
 
     if(!fecha || !idPeriodista || !titulo || !categoria 
     || !resumen || !texto){        
@@ -44,12 +44,12 @@ export const crearNota = async (req, res) => {
     try {
         const nuevaNota = await Nota.create({
             fecha,
-            idPeriodista: Periodista.id,
+            idPeriodista: idPeriodista,
             titulo,
             categoria,
             resumen,
             texto,
-            imagen: imageUrl,
+            imagenes: imageUrl,
 
         });
         res.status(201).json(nuevaNota);
